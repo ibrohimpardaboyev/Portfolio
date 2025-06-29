@@ -1,0 +1,14 @@
+<iframe id="reportFrame" title="real_madrid_match_data" style="width: 100%;height: 100%"
+        src="" frameborder="0" allowFullScreen="true"></iframe>
+
+<script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const embedUrl = urlParams.get('embed');
+
+    if (embedUrl) {
+        const iframe = document.getElementById('reportFrame');
+        iframe.src = embedUrl;
+    } else {
+        console.warn("No 'embed' URL parameter found.");
+    }
+</script>

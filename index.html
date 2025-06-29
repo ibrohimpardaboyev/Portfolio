@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Analyst Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4dabf7;
+            --secondary-color: #339af0;
+            --dark-bg: #1a1b1e;
+            --darker-bg: #121315;
+            --light-text: #f8f9fa;
+            --gray-text: #adb5bd;
+            --card-bg: #25262b;
+            --accent-color: #20c997;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            color: var(--light-text);
+            overflow-x: hidden;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 60% 40%;
+            min-height: 100vh;
+        }
+
+        .left-side {
+            padding: 3rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .right-side {
+            position: fixed;
+            right: 0;
+            top: 0;
+            width: 40%;
+            height: 100vh;
+            background-color: var(--darker-bg);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem;
+            z-index: 1;
+        }
+
+        .profile-image {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid var(--primary-color);
+            box-shadow: 0 0 30px rgba(77, 171, 247, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .profile-image:hover {
+            transform: scale(1.05);
+        }
+
+        header {
+            margin-bottom: 3rem;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+
+        .tagline {
+            font-size: 1.2rem;
+            color: var(--gray-text);
+            margin-bottom: 1.5rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .social-links a {
+            color: var(--light-text);
+            font-size: 1.5rem;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+
+        section {
+            margin-bottom: 3rem;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+            position: relative;
+            display: inline-block;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 50%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), transparent);
+            border-radius: 3px;
+        }
+
+        .about-text {
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .skill {
+            background-color: var(--card-bg);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .skill:hover {
+            background-color: var(--primary-color);
+            color: var(--darker-bg);
+            transform: translateY(-3px);
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .project-card {
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .project-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .project-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+
+        .project-info {
+            padding: 1.5rem;
+        }
+
+        .project-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .project-description {
+            color: var(--gray-text);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .project-tag {
+            background-color: rgba(77, 171, 247, 0.2);
+            color: var(--primary-color);
+            padding: 0.3rem 0.6rem;
+            border-radius: 15px;
+            font-size: 0.7rem;
+        }
+
+        .experience-item, .education-item {
+            background-color: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .experience-item:hover, .education-item:hover {
+            transform: translateX(10px);
+        }
+
+        .job-title, .degree {
+            font-size: 1.2rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .company, .institution {
+            color: var(--primary-color);
+            margin-bottom: 0.3rem;
+        }
+
+        .date {
+            color: var(--gray-text);
+            font-size: 0.9rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .job-description, .education-description {
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .contact-form {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-group label {
+            font-size: 0.9rem;
+            color: var(--gray-text);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            background-color: var(--card-bg);
+            border: none;
+            padding: 0.8rem 1rem;
+            border-radius: 5px;
+            color: var(--light-text);
+            font-size: 1rem;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px var(--primary-color);
+        }
+
+        .submit-btn {
+            background-color: var(--primary-color);
+            color: var(--light-text);
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            width: fit-content;
+        }
+
+        .submit-btn:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-3px);
+        }
+
+        .nav-links {
+            position: fixed;
+            bottom: 2rem;
+            left: 3rem;
+            display: flex;
+            gap: 1.5rem;
+            z-index: 10;
+        }
+
+        .nav-link {
+            color: var(--light-text);
+            text-decoration: none;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--primary-color);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        section {
+            animation: fadeIn 0.8s ease forwards;
+        }
+
+        section:nth-child(2) { animation-delay: 0.2s; }
+        section:nth-child(3) { animation-delay: 0.4s; }
+        section:nth-child(4) { animation-delay: 0.6s; }
+        section:nth-child(5) { animation-delay: 0.8s; }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .right-side {
+                position: static;
+                width: 100%;
+                height: auto;
+                padding: 2rem;
+                order: -1;
+            }
+
+            .left-side {
+                padding: 2rem;
+            }
+
+            .profile-image {
+                width: 200px;
+                height: 200px;
+            }
+
+            .nav-links {
+                position: static;
+                margin-top: 2rem;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            .tagline {
+                font-size: 1rem;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            section {
+                margin-bottom: 2rem;
+            }
+        }
+
+        /* Theme toggle */
+        .theme-toggle {
+            position: fixed;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: var(--card-bg);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 100;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .theme-toggle i {
+            color: var(--light-text);
+            font-size: 1.2rem;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: 10px;
+            max-width: 800px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--gray-text);
+            transition: color 0.3s ease;
+        }
+
+        .close-modal:hover {
+            color: var(--primary-color);
+        }
+
+        .modal-title {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .modal-image {
+            width: 100%;
+            max-height: 400px;
+            object-fit: contain;
+            margin-bottom: 1.5rem;
+            border-radius: 5px;
+        }
+
+        .modal-description {
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-tech {
+            font-style: italic;
+            color: var(--gray-text);
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-links a {
+            color: var(--primary-color);
+            text-decoration: none;
+            margin-right: 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .modal-links a:hover {
+            color: var(--accent-color);
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" id="themeToggle">
+        <i class="fas fa-moon"></i>
+    </button>
+
+    <div class="container">
+        <div class="left-side">
+            <header>
+                <h1>Ibrohim Pardaboyev</h1>
+                <p class="tagline">Transforming Data into Actionable Insights</p>
+                <div class="social-links">
+                    <a href="https://www.linkedin.com/in/ibrokhim-pardabayev" target="_blank"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://github.com/ibrohimpardaboyev" target="_blank"><i class="fab fa-github"></i></a>
+                    <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+                    <a href="#" target="_blank"><i class="fab fa-kaggle"></i></a>
+                </div>
+            </header>
+
+            <section id="about">
+                <h2>About Me</h2>
+                <p class="about-text">
+                    As a highly qualified Business Intelligence (BI) Developer, I bring hands-on experience and a passion for transforming raw data into actionable insights that drive business success. With a strong background in data analytics and a deep understanding of BI tools and platforms, I specialize in building end-to-end data solutions that empower teams and executives to make informed decisions.
+
+                </p>
+                <!-- <p class="about-text">
+                    When I'm not crunching numbers, you can find me contributing to open-source data projects, 
+                    writing about data trends on my blog, or exploring new machine learning techniques.
+                </p> -->
+            </section>
+
+            <section id="skills">
+                <h2>Skills</h2>
+                <div class="skills-container">
+                    <div class="skill">Python</div>
+                    <!-- <div class="skill">R</div> -->
+                    <div class="skill">SQL</div>
+                    <!-- <div class="skill">Tableau</div> -->
+                    <div class="skill">Power BI</div>
+                    <div class="skill">Excel</div>
+                    <div class="skill">Pandas</div>
+                    <div class="skill">NumPy</div>
+                    <div class="skill">Matplotlib</div>
+                    <div class="skill">Seaborn</div>
+                    <!-- <div class="skill">Machine Learning</div> -->
+                    <div class="skill">Data Cleaning</div>
+                    <div class="skill">ETL</div>
+                    <div class="skill">Power Apps</div>
+                    <!-- <div class="skill">Spark</div> -->
+                    <div class="skill">Microsoft Fabric</div>
+                </div>
+            </section>
+
+            <section id="projects">
+                <h2>Projects</h2>
+                <div class="projects-grid">
+                    <div class="project-card" data-project="1">
+                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Sales Dashboard" class="project-image">
+                        <div class="project-info">
+                            <h3 class="project-title">Overall Business Performance in a Café Using Power BI</h3>
+                            <p class="project-description">Interactive Dashboard with analyzing past 2 years of sales of specific cafe</p>
+                            <div class="project-tags">
+                                <span class="project-tag">Power BI</span>
+                                <span class="project-tag">Python</span>
+                                <span class="project-tag">Descriptive Analysis</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card" data-project="2">
+                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1115&q=80" alt="Customer Segmentation" class="project-image">
+                        <div class="project-info">
+                            <h3 class="project-title">Real Madrid Matcha Analysis</h3>
+                            <p class="project-description">Analyze the Real Madrid's Performance On last 100+ games</p>
+                            <div class="project-tags">
+                                <span class="project-tag">Python</span>
+                                <span class="project-tag">Web-Scraping</span>
+                                <span class="project-tag">Descriptive Analysis</span>
+                                <span class="project-tag">Power BI</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="project-card" data-project="3">
+                        <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=765&q=80" alt="Stock Analysis" class="project-image">
+                        <div class="project-info">
+                            <h3 class="project-title">Stock Market Analysis</h3>
+                            <p class="project-description">Time series analysis of S&P 500 stocks with volatility forecasting using ARIMA models.</p>
+                            <div class="project-tags">
+                                <span class="project-tag">R</span>
+                                <span class="project-tag">Time Series</span>
+                                <span class="project-tag">Forecasting</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section id="experience">
+                <h2>Experience</h2>
+                <div class="experience-item">
+                    <h3 class="job-title">BI Developer</h3>
+                    <p class="company">MAAB Inovation LLC.</p>
+                    <p class="date">May 2025-present</p>
+                    <p class="job-description">
+                        responsible for the design, development, and maintenance of business intelligence solutions, ensuring data accessibility, accuracy, and effective reporting. My role included gathering business requirements, creating data models, and developing dashboards and reports to support strategic decision-making.
+                    </p>
+                </div>
+
+                <!-- <div class="experience-item">
+                    <h3 class="job-title">Data Analyst</h3>
+                    <p class="company">Global Retail Corp</p>
+                    <p class="date">Jun 2018 - Dec 2020</p>
+                    <p class="job-description">
+                        Analyzed customer purchase patterns to optimize inventory management, resulting in 15% reduction in stockouts. 
+                        Built interactive dashboards used by regional managers to track KPIs. Implemented data quality checks that improved reporting accuracy by 30%.
+                    </p>
+                </div> -->
+            </section>
+
+            <section id="education">
+                <h2>Education</h2>
+                <div class="education-item">
+                    <h3 class="degree">MAAB Academy</h3>
+                    <p class="institution">Online Data Engineering Course</p>
+                    <p class="date">Jan 2025 - May 2025</p>
+                    <p class="education-description">
+                        First BI Campus In Uzbekistan
+                    </p>
+                </div>
+
+                <!-- <div class="education-item">
+                    <h3 class="degree">BSc in Statistics</h3>
+                    <p class="institution">State University</p>
+                    <p class="date">2012 - 2016</p>
+                    <p class="education-description">
+                        Minor in Computer Science. Graduated with honors. President of Data Science Student Association.
+                    </p>
+                </div> -->
+            </section>
+
+            <section id="contact">
+                <h2>Contact</h2>
+                <form class="contact-form" id="contactForm">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Send Message</button>
+                </form>
+            </section>
+
+            <div class="nav-links">
+                <a href="#about" class="nav-link">About</a>
+                <a href="#skills" class="nav-link">Skills</a>
+                <a href="#projects" class="nav-link">Projects</a>
+                <a href="#experience" class="nav-link">Experience</a>
+                <a href="#education" class="nav-link">Education</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </div>
+        </div>
+
+        <div class="right-side">
+            <img src="img-removebg-preview.png" alt="Data Analyst" class="profile-image">
+            <h2 style="margin-top: 2rem;">Ibrohim Pardaboyev</h2>
+            <p style="color: var(--gray-text); text-align: center; max-width: 300px; margin-top: 0.5rem;">
+                Data Analyst | Business Intelligence Specialist | Data Storyteller
+            </p>
+        </div>
+    </div>
+
+    <!-- Project Modals -->
+    <div class="modal" id="projectModal1">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2 class="modal-title">Cafe sales dashboard</h2>
+            <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Sales Dashboard" class="modal-image">
+            <p class="modal-tech"><strong>Technologies:</strong> Python, Power Bi, SQL</p>
+            <p class="modal-description">
+                This comprehensive retail sales dashboard was developed for a national retail chain with over 200 stores. 
+                The dashboard integrates data from multiple sources including POS systems, e-commerce platforms, and inventory management systems.
+                <br><br>
+                Key features include:
+                <ul style="margin-left: 1.5rem; line-height: 1.6;">
+                    <li>Real-time sales tracking by region, store, and product category</li>
+                    <li>Year-over-year comparison with statistical significance indicators</li>
+                    <li>Predictive analytics module forecasting next quarter sales with 92% accuracy</li>
+                    <li>Inventory optimization recommendations based on sales patterns</li>
+                </ul>
+                <br>
+                The implementation led to a 18% improvement in inventory turnover and helped identify underperforming product categories that were subsequently discontinued.
+            </p>
+            <div class="modal-links">
+                <a href="#" target="_blank"><i class="fab fa-github"></i> View Code</a>
+                <a href="reports.html?embed=https://app.powerbi.com/view?r=eyJrIjoiODBmYTQzMDAtODM2ZC00YWU0LTgzOGQtYzRhMDI4ODcxNjc0IiwidCI6IjJkYzVkYmRjLWNkOWMtNGNkMi1iMmY5LTdlOTUxNTRlODBkZCIsImMiOjEwfQ%3D%3D" download="cafesales"><i class="fas fa-external-link-alt">full report</i></a>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="projectModal2">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2 class="modal-title">Real Madrid Match Analysis</h2>
+            <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1115&q=80" alt="Customer Segmentation" class="modal-image">
+            <p class="modal-tech"><strong>Technologies:</strong> Python, Pandas, Web-Scraping, Power BI</p>
+            <p class="modal-description">
+                This Real Madrid latest 100+ games analysis Dashboard focuses on the Performance Of team and Players. Most Warning Players, Best Performed players and so on 
+                <br><br>
+                The analysis involved:
+                <ul style="margin-left: 1.5rem; line-height: 1.6;">
+                    <li>Data cleaning and normalization of transactional data</li>
+                    <li>Dimensionality reduction using PCA to visualize high-dimensional data</li>
+                    <li>Scraped Clean and ready to analysis Data</li>
+                    <li>Made Some Transformations</li>
+                </ul>
+                <br>
+                Real Madrid Match Analysis was implemented for Descriping the overall performance of players for thie age, nationality and Born Country, How Many Cards they get, teams win and lose rate
+            </p>
+            <div class="modal-links">
+                <!-- <a href="#" target="_blank"><i class="fab fa-github"></i> View Code</a> -->
+                <a href="reports.html?embed=https://app.powerbi.com/view?r=eyJrIjoiMjllYjgxNDctMDllZC00ZGU3LTliMGMtZmY1MGRmYWVjMmRlIiwidCI6IjJkYzVkYmRjLWNkOWMtNGNkMi1iMmY5LTdlOTUxNTRlODBkZCIsImMiOjEwfQ%3D%3D" target="_blank"><i class="fas fa-file-pdf"></i> Full Report</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="projectModal3">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2 class="modal-title">Wiasabi Bank Atms Trancation Analysis</h2>
+            <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=765&q=80" alt="Stock Analysis" class="modal-image">
+            <p class="modal-tech"><strong>Technologies:</strong> Power BI, Microsoft Fabric, Sql</p>
+            <p class="modal-description">
+                I’ve been working on an ATM Utilization & Transaction Analytics Dashboard, and it’s been a great learning project! This helped me turn raw financial data into clear, actionable insights, making it easier to understand customer behaviors and transaction trends.
+                <br><br>
+                Key components included:
+                <ul style="margin-left: 1.5rem; line-height: 1.6;">
+                    <li>Transaction trends – When and where people use ATMs the most</li>
+                    <li>Demographic insights – Who is making transactions (age, occupation, etc.)</li>
+                    <li>Financial activity patterns – Withdrawals, deposits, transfers, and balance inquiries</li>
+                    <li>Geospatial analysis – ATM utilization rates by state</li>
+                </ul>
+                <br>
+                Banks and financial institutions can use these insights to optimize ATM locations, improve services, and enhance customer experience. Even though this is a demo project, it demonstrates how data visualization can drive better financial decisions.
+            </p>
+            <div class="modal-links">
+                <!-- <a href="#" target="_blank"><i class="fab fa-github"></i> View Code</a> -->
+                <a href="reports.html?embed=https://app.powerbi.com/view?r=eyJrIjoiNjZjNGFkMDAtYTc1Ny00ZTllLTliN2EtOTFiMmFmZWM1MzYyIiwidCI6IjJkYzVkYmRjLWNkOWMtNGNkMi1iMmY5LTdlOTUxNTRlODBkZCIsImMiOjEwfQ%3D%3D" target="_blank"><i class="fas fa-chart-line"></i> Interactive Visualization</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Theme toggle functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+        let isDark = true;
+
+        themeToggle.addEventListener('click', () => {
+            isDark = !isDark;
+            if (isDark) {
+                body.style.setProperty('--dark-bg', '#1a1b1e');
+                body.style.setProperty('--darker-bg', '#121315');
+                body.style.setProperty('--light-text', '#f8f9fa');
+                body.style.setProperty('--card-bg', '#25262b');
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+            } else {
+                body.style.setProperty('--dark-bg', '#f8f9fa');
+                body.style.setProperty('--darker-bg', '#e9ecef');
+                body.style.setProperty('--light-text', '#212529');
+                body.style.setProperty('--card-bg', '#ffffff');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            }
+        });
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('.nav-link').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                targetElement.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            });
+        });
+
+        // Project modal functionality
+        const projectCards = document.querySelectorAll('.project-card');
+        const modals = document.querySelectorAll('.modal');
+        const closeButtons = document.querySelectorAll('.close-modal');
+
+        projectCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const projectId = card.getAttribute('data-project');
+                const modal = document.getElementById(`projectModal${projectId}`);
+                modal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            });
+        });
+
+        closeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const modal = button.closest('.modal');
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            });
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target.classList.contains('modal')) {
+                e.target.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        // Form submission
+        const contactForm = document.getElementById('contactForm');
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+            
+            // Here you would typically send the data to a server
+            console.log('Form submitted:', { name, email, message });
+            
+            const botToken = '7991374767:AAGhUOZF-prgo0yE5buhigDxPumCktTmDqw';
+            const chatId = '1505438548';
+
+            fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                chat_id: chatId,
+                text: "name: "+ name + "\nemail: "+email+"\n\nMessage: "+message 
+            })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.ok) {
+                console.log('Message sent successfully');
+                } else {
+                console.error('Error sending message:', data.description);
+                }
+            })
+            .catch(error => console.error('Fetch error:', error));
+            
+            // Show success message
+            alert('Thank you for your message! I will get back to you soon.');
+            
+            // Reset form
+            contactForm.reset();
+        });
+
+        // Animation on scroll
+        const sections = document.querySelectorAll('section');
+        
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => {
+            section.style.opacity = 0;
+            section.style.transform = 'translateY(20px)';
+            section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(section);
+        });
+
+        // Skill hover effect enhancement
+        const skills = document.querySelectorAll('.skill');
+        skills.forEach(skill => {
+            skill.addEventListener('mouseover', () => {
+                const randomColor = `hsl(${Math.random() * 60 + 180}, 70%, 45%)`;
+                skill.style.backgroundColor = randomColor;
+            });
+            
+            skill.addEventListener('mouseout', () => {
+                skill.style.backgroundColor = '';
+            });
+        });
+    </script>
+</body>
+</html>
